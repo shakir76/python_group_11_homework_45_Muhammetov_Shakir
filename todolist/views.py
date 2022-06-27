@@ -17,7 +17,7 @@ def create_task(request):
         task = request.POST.get("task")
         status = request.POST.get("status")
         created_at = request.POST.get("created_at")
-        new_task = Task.objects.create(task=task, status=status, created_at=created_at)
+        description = request.POST.get("description")
+        new_task = Task.objects.create(task=task, status=status, created_at=created_at, description=description)
         context = {"task": new_task}
         return render(request, "task_view.html", context)
-
