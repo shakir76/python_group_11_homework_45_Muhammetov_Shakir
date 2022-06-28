@@ -11,8 +11,9 @@
 <h1>Задачи</h1>
 {% for task in tasks %}
     <h3>{{ task.task }}</h3><i>{{ task.status }} - {{ task.get_status_display }} </i>
+    <p><a href="{% url "view" task.pk %}">Подробнее</a></p>
 {% endfor %}
 <br>
-<a href="add/">Создание задачи</a>
+<a href="{% url "add" %}">Создание задачи</a>
 </body>
 </html>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from todolist.models import Task, STATUS_CODE
@@ -8,6 +8,12 @@ def index(request):
     task = Task.objects.order_by("-created_at")
     context = {"tasks": task}
     return render(request, "index.html", context)
+
+
+def task_view(request, **kwargs):
+    pk = kwargs["pk"]
+    task = Task.objects.get(pk=pk)
+    return render(request, "task_view.html", {'task': task})
 
 
 def create_task(request):
@@ -20,4 +26,4 @@ def create_task(request):
         description = request.POST.get("description")
         new_task = Task.objects.create(task=task, status=status, created_at=created_at, description=description)
         context = {"task": new_task}
-        return render(request, "task_view.html", context)
+        return redirect("view", pk=new_task.pk)
