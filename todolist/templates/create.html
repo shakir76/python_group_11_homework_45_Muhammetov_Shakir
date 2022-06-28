@@ -1,13 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Создание{% endblock %}
+
+
+{% block content %}
 <h1>Создание новой задачи</h1>
 
 <form action="" method="post">
@@ -21,11 +16,13 @@
         {% endfor %}
     </select>
     <br/>
+    <label>Описания</label><br/>
+    <textarea name="description"></textarea><br/>
+    <br/>
     <label>Дедлайн</label><br/>
     <input type="date" name="created_at"/><br/>
     <br/>
     <input type="submit" value="Send"/>
 </form>
-<a href="/">На главную</a>
-</body>
-</html>
+<a href="{% url "index" %}">На главную</a>
+{% endblock %}

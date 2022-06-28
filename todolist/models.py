@@ -7,6 +7,7 @@ STATUS_CODE = [('new', 'Новая'), ('in_progress', 'В процессе'), ('
 class Task(models.Model):
     task = models.CharField(max_length=50, null=False, blank=False, verbose_name="Задача")
     status = models.CharField(max_length=20, choices=STATUS_CODE, verbose_name="Статус", default=STATUS_CODE[0][0])
+    description = models.TextField(max_length=200, null=True, blank=True, verbose_name="Описание")
     created_at = models.DateField(default="", verbose_name="Дедлайн")
 
     def __str__(self):

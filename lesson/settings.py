@@ -55,7 +55,7 @@ ROOT_URLCONF = 'lesson.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR / 'todolist/templates']
         ,
         'APP_DIRS': True,
         'OPTIONS': {

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Создание{% endblock %}
+{% block nav %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "add" %}">Новая задачи</a>
+    </li>
+{% endblock %}
+{% block content %}
+    <p>
+        {{ task.task }}
+    </p>
+    <p>
+        {{ task.status }}
+    </p>
+    <p>
+        {{ task.description }}
+    </p>
+    <p>
+        {{ task.created_at }}
+    </p>
+    <a href="{% url "index" %}">На главную</a>
+{% endblock %}
