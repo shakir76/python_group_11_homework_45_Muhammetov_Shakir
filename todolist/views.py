@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from todolist.models import Task, STATUS_CODE
@@ -11,8 +11,8 @@ def index(request):
 
 
 def task_view(request, **kwargs):
-    pk = kwargs["pk"]
-    task = Task.objects.get(pk=pk)
+    pk = kwargs.get("pk")
+    task = get_object_or_404(Task, pk=pk)
     return render(request, "task_view.html", {'task': task})
 
 
