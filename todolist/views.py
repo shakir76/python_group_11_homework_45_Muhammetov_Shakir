@@ -36,14 +36,23 @@ def create_task(request):
 def update_task(request, pk):
     tasks = get_object_or_404(Task, pk=pk)
     if request.method == "GET":
-        return render(request, "update.html", {'task': tasks, 'statuses': STATUS_CODE})
+        form = TaskForm(initial={
+            "task": tasks.task,
+            "status": tasks.status,
+            "description": tasks.description,
+            "created_at": tasks.created_at
+        })
+        return render(request, "update.html", {'form': form, 'statuses': STATUS_CODE})
     else:
-        tasks.task = request.POST.get("task")
-        tasks.status = request.POST.get("status")
-        tasks.created_at = request.POST.get("created_at")
-        tasks.description = request.POST.get("description")
-        tasks.save()
-        return redirect("view", pk=tasks.pk)
+        form = TaskForm(data=request.POST)
+        if form.is_valid():
+            tasks.task = form.cleaned_data.get("task")
+            tasks.status = form.cleaned_data.get("status")
+            tasks.created_at = form.cleaned_data.get("created_at")
+            tasks.description = form.cleaned_data.get("description")
+            tasks.save()
+            return redirect("view", pk=tasks.pk)
+        return render(request, "update.html", {'form': form, 'statuses': STATUS_CODE})
 
 
 def delete_task(request, pk):
