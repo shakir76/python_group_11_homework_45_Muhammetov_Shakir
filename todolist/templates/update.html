@@ -3,26 +3,11 @@
 
 
 {% block content %}
-<h1>Изменения задачи</h1>
+    <h1>Изменения задачи</h1>
 
-<form action="" method="post">
-    {% csrf_token %}
-    <label>Задача</label><br/>
-    <input type="text" name="task" value="{{ task.task }}"/><br/>
-    <label>Статус</label><br/>
-    <select name="status" >
-        {% for status in statuses %}
-            <option value="{{ status.0 }}">{{ status.1 }}</option>
-        {% endfor %}
-    </select>
-    <br/>
-    <label>Описания</label><br/>
-    <textarea name="description">{{ task.description }}</textarea><br/>
-    <br/>
-    <label>Дедлайн</label><br/>
-    <input type="date" name="created_at" value="{{ task.created_at }}"/><br/>
-    <br/>
-    <input type="submit" value="Update"/>
-</form>
-<a href="{% url "index" %}">На главную</a>
+    <form action="" method="post">
+        {% include "partial/form.html" with button_text="Изменить" %}
+
+    </form>
+    <a href="{% url "index" %}">На главную</a>
 {% endblock %}
