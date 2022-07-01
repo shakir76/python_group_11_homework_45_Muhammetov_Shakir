@@ -1,17 +1,10 @@
 {% csrf_token %}
-<label>Задача</label><br/>
-<input type="text" name="task" value="{{ task.task }}"/><br/>
-<label>Статус</label><br/>
-<select name="status">
-    {% for status in statuses %}
-        <option value="{{ status.0 }}">{{ status.1 }}</option>
+
+{% for field in form %}
+    <p><label for="{{ field.id_for_label }}">{{ field.label }}</label></p>
+    {% for error in field.errors %}
+        <p class="text-danger">{{ error }}</p>
     {% endfor %}
-</select>
-<br/>
-<label>Описания</label><br/>
-<textarea name="description">{{ task.description }}</textarea><br/>
-<br/>
-<label>Дедлайн</label><br/>
-<input type="date" name="created_at" value="{{ task.created_at }}"/><br/>
-<br/>
+    <p>{{ field }}</p>
+{% endfor %}
 <input type="submit" value="{{ button_text }}"/>

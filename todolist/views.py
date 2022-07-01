@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
+from todolist.forms import TaskForm
 from todolist.models import Task, STATUS_CODE
 
 
@@ -18,15 +19,18 @@ def task_view(request, **kwargs):
 
 def create_task(request):
     if request.method == "GET":
-        return render(request, "create.html", {'statuses': STATUS_CODE})
+        form = TaskForm()
+        return render(request, "create.html", {'statuses': STATUS_CODE, "form": form})
     else:
-        task = request.POST.get("task")
-        status = request.POST.get("status")
-        created_at = request.POST.get("created_at")
-        description = request.POST.get("description")
-        new_task = Task.objects.create(task=task, status=status, created_at=created_at, description=description)
-        context = {"task": new_task}
-        return redirect("view", pk=new_task.pk)
+        form = TaskForm(data=request.POST)
+        if form.is_valid():
+            task = form.cleaned_data.get("task")
+            status = form.cleaned_data.get("status")
+            created_at = form.cleaned_data.get("created_at")
+            description = form.cleaned_data.get("description")
+            new_task = Task.objects.create(task=task, status=status, created_at=created_at, description=description)
+            return redirect("view", pk=new_task.pk)
+        return render("create.html", {"form": form})
 
 
 def update_task(request, pk):
