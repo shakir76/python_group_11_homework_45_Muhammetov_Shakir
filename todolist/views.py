@@ -27,3 +27,16 @@ def create_task(request):
         new_task = Task.objects.create(task=task, status=status, created_at=created_at, description=description)
         context = {"task": new_task}
         return redirect("view", pk=new_task.pk)
+
+
+def update_task(request, pk):
+    tasks = get_object_or_404(Task, pk=pk)
+    if request.method == "GET":
+        return render(request, "update.html", {'task': tasks, 'statuses': STATUS_CODE})
+    else:
+        tasks.task = request.POST.get("task")
+        tasks.status = request.POST.get("status")
+        tasks.created_at = request.POST.get("created_at")
+        tasks.description = request.POST.get("description")
+        tasks.save()
+        return redirect("view", pk=tasks.pk)
